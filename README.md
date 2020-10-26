@@ -3,7 +3,7 @@ In this project, there will be the implementation and evaluation of two methods 
 
 ## Provided data
 As part of the analysis, clustering methods will be applied to several sets of 2D data that include information about lifetime cancer risk from air toxics. Each entry in the data set corresponds to a county in the USA (identified by a unique 5 digit string called a FIPS county code) and includes information on the total population of the county and its per-capita lifetime cancer risk due to air toxics. To aid in visualizing this data, the county-level data includes the (x, y) position of each county when overlaid on this map of the USA:
-![USA map](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/master/Data/USA_Counties.png?raw=true)
+![USA map](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/main/Data/USA_Counties.png?raw=true)
  The program draws this map of the USA and overlays a collection of circles whose radius and color represent the total population and lifetime cancer risk of the corresponding county. Choosing a threshold for the lifetime cancer risk (multiplied by 10^-5) and eliminating those counties whose cancer risk is below that threshold yields smaller data sets with 896, 290, and 111 counties, using 3.5, 4.5, and 5.5 tresholds respectively. These four data sets will be the primary test data for the clustering methods.
 
 ## The Cluster class
@@ -16,11 +16,11 @@ The class initializer `Cluster(FIPS_codes, horiz_center, vert_center, total_popu
 The functions for computing closest pairs should work on lists of Cluster objects and compute distances between clusters using the distance method. The three functions are:
 
 * `slow_closest_pair(cluster_list)` - Takes a list of Cluster objects and returns a closest pair where the pair is represented by the tuple `(dist, idx1, idx2)` with idx1 < idx2 where dist is the distance between the closest pair `cluster_list[idx1]` and `cluster_list[idx2]`. This function should be implemented from the brute-force closest pair method:
-![SCP](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/master/Data/Slow_closest_pair.png?raw=true)
+![SCP](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/main/Data/Slow_closest_pair.png?raw=true)
 * `fast_closest_pair(cluster_list)` - Takes a list of Cluster objects and returns a closest pair where the pair is represented by the tuple `(dist, idx1, idx2)` with idx1 < idx2 where dist is the distance between the closest pair `cluster_list[idx1]` and `cluster_list[idx2]`. This function should be implemented from the divide-and-conquer closest pair method:
-![FCP](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/master/Data/Fast_closest_pair.png?raw=true)
+![FCP](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/main/Data/Fast_closest_pair.png?raw=true)
 * `closest_pair_strip(cluster_list, horiz_center, half_width)` - Takes a list of Cluster objects and two floats horiz_center and half_width. horiz_center specifies the horizontal position of the center line for a vertical strip and half_width specifies the maximal distance of any point in the strip from the center line. This function should return a tuple corresponding to the closest pair of clusters that lie in the specified strip and should be implemented from the helper function:
-![FCP](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/master/Data/Closest_pair_strip.png?raw=true)
+![FCP](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/main/Data/Closest_pair_strip.png?raw=true)
 
 Sorting a list of clusters by the vertical (or horizontal) positions of the cluster centers was at some point needed. A sort by vertical position was done in a single line of Python using the sort method for lists by providing a key argument of the form:
 `cluster_list.sort(key=lambda cluster: cluster.vert_center())`
@@ -30,11 +30,11 @@ Clustering_method_tests.py contains tests used to verify all functions were corr
 ## Clustering functions
 
 * `hierarchical_clustering(cluster_list, num_clusters)` - Takes a list of Cluster objects and applies hierarchical clustering as described in the following pseudo-code: 
-![HC](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/master/Data/Hierarchical_clustering.jpg?raw=true)
+![HC](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/main/Data/Hierarchical_clustering.jpg?raw=true)
 This clustering process should proceed until num_clusters clusters remain. The function then returns this list of clusters.
 
 * `kmeans_clustering(cluster_list, num_clusters, num_iterations)` - Takes a list of Cluster objects and applies k-means clustering as described in the following pseudo-code:
-![KMC](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/master/Data/K-Means_clustering.jpg?raw=true)
+![KMC](https://github.com/rokobo/Cancer-Clustering-Algorithm-Analysis/blob/main/Data/K-Means_clustering.jpg?raw=true)
  This function should compute an initial list of clusters (line 2 in the pseudo-code) with the property that each cluster consists of a single county chosen from the set of the num_cluster counties with the largest populations. The function should then compute num_iterations of k-means clustering and return this resulting list of clusters.
 # Analysis
 The analysis part of this project will analyze the performance of the clustering methods on various subsets of our county-level cancer risk data set. In particular, we will compare these methods in three areas:
